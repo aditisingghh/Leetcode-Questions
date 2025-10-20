@@ -6,9 +6,12 @@ class Solution {
             int digit = x % 10;
             
             // Check for potential overflow before updating 'rev'.
+            // Positive overflow check
             if (rev > Integer.MAX_VALUE / 10 || (rev == Integer.MAX_VALUE / 10 && digit > 7)) {
                 return 0;
             }
+            
+            // Negative overflow check
             if (rev < Integer.MIN_VALUE / 10 || (rev == Integer.MIN_VALUE / 10 && digit < -8)) {
                 return 0;
             }
