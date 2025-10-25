@@ -1,18 +1,25 @@
 class Solution {
     public int countPrimes(int n) {
-        if (n < 3) return 0;                    // no primes below 2
+        if (n <= 2) return 0; // no primes less than 2
 
-        boolean[] isComposite = new boolean[n]; // false ⇢ potentially prime
-        int count = 0;
+        boolean[] isPrime = new boolean[n];
+        Arrays.fill(isPrime, true);
 
-        for (int i = 2; i < n; i++) {
-            if (!isComposite[i]) {              // i is prime
-                count++;
-                if ((long) i * i < n) {         // mark multiples of i
-                    for (int j = i * i; j < n; j += i)
-                        isComposite[j] = true;
+        isPrime[0] = false;
+        isPrime[1] = false;
+
+        // Sieve of Eratosthenes
+        for (int i = 2; i * i < n; i++) {
+            if (isPrime[i]) {
+                for (int j = i * i; j < n; j += i) {
+                    isPrime[j] = false;
                 }
             }
+        }
+
+        int count = 0;
+        for (boolean prime : isPrime) {
+            if (prime) count++;
         }
         return count;
     }
